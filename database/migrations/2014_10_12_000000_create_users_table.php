@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('image',100)->nullable();//Aqui estou criando o campo para guardar o nome da imagem e ele sera opcional
             $table->rememberToken();
             $table->timestamps();
         });

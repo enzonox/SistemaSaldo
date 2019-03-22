@@ -110,11 +110,6 @@ return [
     'menu' => [
         'MENU',
         [
-            'text' => 'Blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
-        [
             'text'        => 'Home',
             'url'         => 'admin/pages',
             'icon'        => 'home',

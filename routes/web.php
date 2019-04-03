@@ -11,9 +11,13 @@
 |
 */
 
-$this->group(['middleware' => ['auth'], 'namespace' => 'Admin'], function(){// Gurpo de rotas com permissoes de acesso por autenticacao
-    $this->get('admin', 'AdminController@index')->name('admin.home');
+$this->group(['middleware' => ['auth'], 'namespace' => 'Admin', 'prefix' => 'admin'], function(){// Gurpo de rotas com permissoes de acesso por autenticacao
+    $this->get('saldos', 'BalanceController@index')->name('admin.balance');
+    
+    $this->get('/', 'AdminController@index')->name('admin.home');
 });
+
+
 
 $this->get('/', 'Site\SiteController@index')->name('home');
 

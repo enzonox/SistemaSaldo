@@ -10,8 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//Grupo de Administracao
 $this->group(['middleware' => ['auth'], 'namespace' => 'Admin', 'prefix' => 'admin'], function(){// Gurpo de rotas com permissoes de acesso por autenticacao
+    $this->post('deposito', 'BalanceController@depositoRecarregar')->name('deposito.consulta');
+    $this->get('deposito', 'BalanceController@deposito')->name('balance.deposito');
     $this->get('saldos', 'BalanceController@index')->name('admin.balance');
     
     $this->get('/', 'AdminController@index')->name('admin.home');

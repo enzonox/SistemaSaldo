@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Balance;
+use App\Http\Requests\MoneyValidationFormRequest;
 
 class BalanceController extends Controller
 {
@@ -21,7 +22,7 @@ class BalanceController extends Controller
         return view('admin.balance.deposito');
     }
 
-    public function depositoRecarregar(Request $request, Balance $balance)
+    public function depositoRecarregar(MoneyValidationFormRequest $request)
     {
         //$balance->recarga($request->value);
         //dd(auth()->user()->balance()->FirstOrCreate([]));

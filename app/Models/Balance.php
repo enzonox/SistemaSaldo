@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Balance extends Model
 {
@@ -11,6 +12,9 @@ class Balance extends Model
 
     public function recarga($value)
     {//Aqui colocaremos a logica de incrementacao
+
+        DB::beginTransaction();
+
         $totalBefore = $this->amount ? $this->amount : 0;
         $this->amount += number_format($value, 2, '.', '');
         $deposito = $this->save();//Comando para salvar no banco
@@ -25,15 +29,19 @@ class Balance extends Model
         ]);
 
         if($deposito && $historico){
+
+            DB:commit();
             return[
                 'success' => true,
 
                 'message' => 'Sucesso ao recarregar'
             ];
-        }
-        return [
-            'success' => false,
+        }else{
+            DB::rollback();
+            return [
+                'success' => false,
                 'message' => 'Falha ao carregar'
-        ];
+            ];
+        }
     }
 }

@@ -30,7 +30,7 @@ class Balance extends Model
 
         if($deposito && $historico){
 
-            DB:commit();
+            DB::commit();
             return[
                 'success' => true,
 

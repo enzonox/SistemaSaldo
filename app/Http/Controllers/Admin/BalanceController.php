@@ -27,7 +27,17 @@ class BalanceController extends Controller
         //$balance->recarga($request->value);
         //dd(auth()->user()->balance()->FirstOrCreate([]));
         $balance = auth()->user()->balance()->FirstOrCreate([]);
-        dd($balance->recarga($request->value));
+        $response =$balance->recarga($request->value);
+
+        if($response['success']){
+            return redirect()
+                        ->route('admin.balance')
+                        ->with('success', $response['message']);
+        }else{
+            return redirect()
+                        ->back()
+                        ->with('error', $response['message']);
+        }
 
     }
 }

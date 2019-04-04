@@ -18,13 +18,7 @@
             <h3>Deposito</h3>
         </div>
         <div class="box-body">
-            @if($errors->any())<!--Estudar metodo any()-->
-                <div class="alert alert-warning">
-                    @foreach ($errors->all() as $error)
-                        <p>{{$error}}<p>
-                    @endforeach
-                </div>
-            @endif
+            @include('admin.includes.alerts')
             <form method="POST" action="{{ route('deposito.consulta')}}">
                 <!--{!!csrf_token()!!} //outra forma de passar -->
                     {!!csrf_field()!!}

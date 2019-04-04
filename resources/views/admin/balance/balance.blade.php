@@ -6,8 +6,8 @@
     <h1>Saldo</h1>
 
     <ol class="breadcrumb">
-        <li><a href="">Dashboard</a><li>
-        <li><a href="">Saldo</a><li>
+        <li><a href="">Dashboard</a></li>
+        <li><a href="">Saldo</a></li>
     </ol>
 @stop
 
@@ -15,7 +15,7 @@
     <div class="box">
         <div class="box-header">
             <!--icones nao funcionaram-->
-            <a href="" class="btn btn-warning money-check-alt">
+            <a href="{{route ('balance.deposito')}}" class="btn btn-warning money-check-alt">
                 Recarregar</a>
             <a href="" class="btn btn-danger">
                 Sacar</a>
@@ -24,7 +24,6 @@
             <div class="small-box bg-green">
                     <div class="inner">
                     <h3>R$ {{number_format($amount, 2, ',', '')}}</h3>
-
                     </div>
                     <div class="icon">
                         <i class="ion ion-cash"></i>

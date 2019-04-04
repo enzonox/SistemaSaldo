@@ -18,7 +18,7 @@ class CreateBalancesTable extends Migration
             $table->increments('id');//o id sera incremental
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');//Chave estrangeira
-            $table->double('amount', 10, 2);//Total
+            $table->double('amount', 10, 2)->default(0);//Total / o defaul esta defenindo o valor padrao como zero
         });
     }
 

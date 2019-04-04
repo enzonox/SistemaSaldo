@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Balance;
 
 class BalanceController extends Controller
 {
@@ -20,8 +21,12 @@ class BalanceController extends Controller
         return view('admin.balance.deposito');
     }
 
-    public function depositoRecarregar(Request $request)
+    public function depositoRecarregar(Request $request, Balance $balance)
     {
-        dd($request->all());
+        //$balance->recarga($request->value);
+        //dd(auth()->user()->balance()->FirstOrCreate([]));
+        $balance = auth()->user()->balance()->FirstOrCreate([]);
+        dd($balance->recarga($request->value));
+
     }
 }

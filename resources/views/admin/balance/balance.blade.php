@@ -15,7 +15,7 @@
     <div class="box">
         <div class="box-header">
             <!--icones nao funcionaram-->
-        <a href="{{route ('balance.deposito')}}" class="btn btn-warning money-check-alt">
+            <a href="{{route ('balance.deposito')}}" class="btn btn-warning money-check-alt">
                 Recarregar</a>
             <a href="" class="btn btn-danger">
                 Sacar</a>

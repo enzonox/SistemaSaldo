@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Recarga')<!--O titulo da janela no browser-->
+@section('title', 'Saque de Saldo')<!--O titulo da janela no browser-->
 
 @section('content_header')<!--O titulo da pagina-->
-    <h1>Fazer Recarga</h1>
+    <h1>Realizar Saque</h1>
 
     <ol class="breadcrumb">
         <li><a href="">Dashboard</a></li>
@@ -19,11 +19,11 @@
         </div>
         <div class="box-body">
             @include('admin.includes.alerts')
-            <form method="POST" action="{{ route('deposito.consulta')}}">
+            <form method="POST" action="{{ route('saque.consulta')}}">
                 <!--{!!csrf_token()!!} //outra forma de passar -->
                     {!!csrf_field()!!}
                     <div class="form-group">
-                        <input type="text" name="value" placeholder="Valor Recarga">
+                        <input type="text" class="form-control" name="value" placeholder="Valor Saque">
                     </div>
                     <div class="form-group">
                         <button  class="btn btn-success" type>Recarregar Saldo</button>

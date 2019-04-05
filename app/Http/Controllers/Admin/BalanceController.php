@@ -62,4 +62,14 @@ class BalanceController extends Controller
         }
 
     }
+
+    public function transferencia()
+    {
+        return view('admin.balance.transferencia');
+    }
+
+    public function confirmarTransferencia(Request $request)
+    {
+        dd($request->all());
+    }
 }

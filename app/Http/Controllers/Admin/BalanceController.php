@@ -82,12 +82,31 @@ class BalanceController extends Controller
                     ->back()
                     ->with('error','Nao pode Transferir o saldo para voce mesmo!');
         }
-        
-        return view('admin.balance.confirmar-transfer', compact('remetente'));
+        //para pegar o saldo do usuario 
+        $saldo = auth()->user()->balance;
+
+        return view('admin.balance.confirmar-transfer', compact('remetente', 'saldo'));
     }
 
-    public function transferirSaldo(Request $request)
-    {
-        dd($request->all());
+    public function transferirSaldo(MoneyValidationFormRequest $request, User $user)
+    {//verificando usuario do remetente
+        if(!$remetente = $user->find($request->remetente_id)){
+            return redirect()
+                        ->route('transferencia.confirmada')
+                        ->with('success','Recebedor Nao Encontrado!');
+        }
+
+        $balance = auth()->user()->balance()->FirstOrCreate([]);
+        $response =$balance->transferir($request->value, $remetente);//Metodo transferir sera o responsavel por salvar  transferencia no banco
+
+        if($response['success']){
+            return redirect()
+                        ->route('admin.balance')
+                        ->with('success', $response['message']);
+        }else{
+            return redirect()
+                        ->route('transferencia.confirmada')
+                        ->with('error', $response['message']);
+        }
     }
 }

@@ -22,7 +22,8 @@
         <div class="box-body">
             @include('admin.includes.alerts')
 
-        <p><strong>Recebedor: </strong>{{$remetente->name}}</p>
+            <p><strong>Seu Saldo Atual: </strong>{{number_format($saldo->amount, 2, ',', '.')}}</p>
+            <p><strong>Recebedor: </strong>{{$remetente->name}}</p>
 
             <form method="POST" action="{{ route('transferencia.confirmada')}}">
                     {!!csrf_field()!!}
@@ -30,7 +31,7 @@
             <input type="hidden" name="remetente_id" value="{{$remetente->id}}">
 
                     <div class="form-group">
-                        <input type="text" class="form-control" name="saldo" placeholder="Valor:">
+                        <input type="text" class="form-control" name="value" placeholder="Valor:">
                     </div>
                     <div class="form-group">
                         <button  class="btn btn-success" type>Proxima Etapa</button>

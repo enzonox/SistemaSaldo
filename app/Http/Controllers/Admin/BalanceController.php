@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Balance;
 use App\Http\Requests\MoneyValidationFormRequest;
+use App\User;
 
 class BalanceController extends Controller
 {
@@ -61,5 +62,51 @@ class BalanceController extends Controller
                         ->with('error', $response['message']);
         }
 
+    }
+
+    public function transferencia()
+    {
+        return view('admin.balance.transferencia');
+    }
+
+    public function confirmarTransferencia(Request $request, User $user)
+    {//Caso nao encontre o usuario retornara uma mensagem de erro
+        if(!$remetente = $user->getRemetente($request->remetente)){
+            return redirect()
+                    ->back()
+                    ->with('error','Usuario Nao Foi Encontrado!');
+        }
+
+        if($remetente->id === auth()->user()->id){
+            return redirect()
+                    ->back()
+                    ->with('error','Nao pode Transferir o saldo para voce mesmo!');
+        }
+        //para pegar o saldo do usuario 
+        $saldo = auth()->user()->balance;
+
+        return view('admin.balance.confirmar-transfer', compact('remetente', 'saldo'));
+    }
+
+    public function transferirSaldo(MoneyValidationFormRequest $request, User $user)
+    {//verificando usuario do remetente
+        if(!$remetente = $user->find($request->remetente_id)){
+            return redirect()
+                        ->route('transferencia.confirmada')
+                        ->with('success','Recebedor Nao Encontrado!');
+        }
+
+        $balance = auth()->user()->balance()->FirstOrCreate([]);
+        $response =$balance->transferir($request->value, $remetente);//Metodo transferir sera o responsavel por salvar  transferencia no banco
+
+        if($response['success']){
+            return redirect()
+                        ->route('admin.balance')
+                        ->with('success', $response['message']);
+        }else{
+            return redirect()
+                        ->route('transferencia.confirmada')
+                        ->with('error', $response['message']);
+        }
     }
 }

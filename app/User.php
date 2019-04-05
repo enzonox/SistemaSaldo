@@ -37,4 +37,12 @@ class User extends Authenticatable
     public function historics(){
         return $this->hasMany(Historic::class);//hasMany faz o relacionamento de um para muitos com a tabela de saldo 
     }
+
+    public function getRemetente($remetente)
+    {//Query que vai buscar usuario para confirmar transferencia
+        return $this->where('name', 'LIKE', "%$remetente%")
+                    ->orWhere('email', $remetente)
+                    ->get()
+                    ->first();
+    }
 }

@@ -17,10 +17,14 @@
             <!--icones nao funcionaram-->
             <a href="{{route ('balance.deposito')}}" class="btn btn-warning money-check-alt">
                 Recarregar</a>
-            @if($amount > 0)<!--A opcao de saque so aparecera-->
+            @if($amount > 0)<!--A opcao de saque so aparecerase o saldo for maior que 0-->
                 <a href="{{route ('balance.saque')}}" class="btn btn-danger">
                         Sacar</a>
             @endif
+            @if($amount > 0)<!--A opcao de Transferencia so aparecera se o saldo for maior que 0-->
+            <a href="{{route ('balance.transferencia')}}" class="btn btn-primary">
+                    Transferir</a>
+        @endif
         </div>
         <div class="box-body">
             @include('admin.includes.alerts')    

@@ -17,8 +17,10 @@
             <!--icones nao funcionaram-->
             <a href="{{route ('balance.deposito')}}" class="btn btn-warning money-check-alt">
                 Recarregar</a>
-            <a href="" class="btn btn-danger">
-                Sacar</a>
+            @if($amount > 0)<!--A opcao de saque so aparecera-->
+                <a href="{{route ('balance.saque')}}" class="btn btn-danger">
+                        Sacar</a>
+            @endif
         </div>
         <div class="box-body">
             @include('admin.includes.alerts')    

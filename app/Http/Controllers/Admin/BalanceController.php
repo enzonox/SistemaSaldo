@@ -40,4 +40,26 @@ class BalanceController extends Controller
         }
 
     }
+
+    public function saque()
+    {
+        return view('admin.balance.saque');
+    }
+    
+    public function retiradaSaque(MoneyValidationFormRequest $request)
+    {
+        $balance = auth()->user()->balance()->FirstOrCreate([]);
+        $response =$balance->sacar($request->value);
+
+        if($response['success']){
+            return redirect()
+                        ->route('admin.balance')
+                        ->with('success', $response['message']);
+        }else{
+            return redirect()
+                        ->back()
+                        ->with('error', $response['message']);
+        }
+
+    }
 }

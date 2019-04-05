@@ -34,14 +34,57 @@ class Balance extends Model
             return[
                 'success' => true,
 
-                'message' => 'Sucesso ao recarregar'
+                'message' => 'Sucesso ao Recarregar'
             ];
         }else{
             DB::rollback();
             return [
                 'success' => false,
-                'message' => 'Falha ao carregar'
+                'message' => 'Falha ao Carregar'
             ];
         }
+    }
+
+    public function sacar($value)
+    {//Aqui colocaremos a logica de retirada de saldo
+
+       //verificar se o saldo do usuario e superior ao valor do saque
+       if($this->amount < $value){
+            return [
+                'success' => false,
+                'message' => 'saldo Insuficiente'
+            ];
+       }else{
+            DB::beginTransaction();
+
+            $totalBefore = $this->amount ? $this->amount : 0;
+            $this->amount -= number_format($value, 2, '.', '');
+            $saque = $this->save();//Comando para salvar no banco
+
+            //registrando o historico para o usuario
+            $historico = auth()->user()->historics()->create([
+                'type' => 'O',
+                'amount' => $value, // valor do saldo atual
+                'total_before' =>$totalBefore,// valor do saldo antes da recarga
+                'total_after' => $this->amount, //total apos recarga
+                'date' => date('ymd'),
+            ]);
+
+            if($saque && $historico){
+
+                DB::commit();
+                return[
+                    'success' => true,
+
+                    'message' => 'Sucesso no Sacar'
+                ];
+            }else{
+                DB::rollback();
+                return [
+                    'success' => false,
+                    'message' => 'Falha ao Realizar Saque'
+                ];
+            }
+       }
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Balance;
 use App\Http\Requests\MoneyValidationFormRequest;
 use App\User;
+use App\Models\Historic;
 
 class BalanceController extends Controller
 {   
@@ -111,14 +112,19 @@ class BalanceController extends Controller
         }
     }
 
-    public function historico()
+    public function historico(Historic $historico)
     {
         $historics = auth()->user()
                                 ->historics()
                                 ->with(['usuarioRemetente'])
                                 ->paginate($this->totalPaginas);//retirado o get pelo paginate para colocar o numero de paginas
         
+        $types = $historico->type();//Para inserir os tipos na pesquisa
+        return view('admin.balance.consulta-historico', compact('historics', 'types')); 
+    }
 
-        return view('admin.balance.consulta-historico', compact('historics')); 
+    public function pesquisaHistorico(Request $request)
+    {//metodo para realizar o filtro
+        dd($request->all());
     }
 }

@@ -109,4 +109,11 @@ class BalanceController extends Controller
                         ->with('error', $response['message']);
         }
     }
+
+    public function historico()
+    {
+        $historics = auth()->user()->historics()->get();
+
+        return view('admin.balance.consulta-historico', compact('historics')); 
+    }
 }

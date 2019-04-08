@@ -12,6 +12,9 @@
 */
 //Grupo de Administracao
 $this->group(['middleware' => ['auth'], 'namespace' => 'Admin', 'prefix' => 'admin'], function(){// Gurpo de rotas com permissoes de acesso por autenticacao
+    
+    $this->get('historico','BalanceController@historico')->name('admin.historico');
+    
     $this->get('trasferencia','BalanceController@transferencia')->name('balance.transferencia');
     $this->post('confirmar-transferencia', 'BalanceController@confirmarTransferencia')->name('confirmar.transferencia');
     $this->post('trasferencia', 'BalanceController@transferirSaldo')->name('transferencia.confirmada');

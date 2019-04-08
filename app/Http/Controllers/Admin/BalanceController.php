@@ -112,7 +112,8 @@ class BalanceController extends Controller
 
     public function historico()
     {
-        $historics = auth()->user()->historics()->get();
+        $historics = auth()->user()->historics()->with(['usuarioRemetente'])->get();
+        
 
         return view('admin.balance.consulta-historico', compact('historics')); 
     }

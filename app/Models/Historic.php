@@ -42,4 +42,24 @@ class Historic extends Model
     {//Metodo precisa ter exatamente este nome
         return Carbon::parse($value)->format('d/m/Y');
     }
+
+    public function pesquisa(Array $data, $totalPagina)
+    {//Query para realizar o filtro
+        $historics = $this->where(function ($query) use ($data){
+            if(isset($data['id']))
+                $query->where('id', $data['id']);
+            
+
+            if(isset($data['date']))
+                $query->where('date', $data['date']);
+            
+
+            if(isset($data['type']))
+                $query->where('type', $data['type']);
+            
+        })//->toSql();dd($historics);
+        ->paginate($totalPagina);//Para retornar o resultado da pesquisa
+
+        return $historics;
+    }
 }

@@ -123,8 +123,15 @@ class BalanceController extends Controller
         return view('admin.balance.consulta-historico', compact('historics', 'types')); 
     }
 
-    public function pesquisaHistorico(Request $request)
+    public function pesquisaHistorico(Request $request, Historic $historico)
     {//metodo para realizar o filtro
-        dd($request->all());
+        $dataForm = $request->all();
+
+        $historics = $historico->pesquisa($dataForm, $this->totalPaginas);
+        
+        $types = $historico->type();
+
+        return view('admin.balance.consulta-historico', compact('historics', 'types'));
+
     }
 }

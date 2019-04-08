@@ -9,7 +9,8 @@ use App\Http\Requests\MoneyValidationFormRequest;
 use App\User;
 
 class BalanceController extends Controller
-{
+{   
+    private $totalPaginas = 10;//variavel parapaginacao
     public function index(){
         //dd( auth()->user()->balance()->get()); Para jogar no dd os dados que estao vindo da tabela, o get esta retornando o registro
         $balance = auth()->user()->balance;//
@@ -112,7 +113,10 @@ class BalanceController extends Controller
 
     public function historico()
     {
-        $historics = auth()->user()->historics()->with(['usuarioRemetente'])->get();
+        $historics = auth()->user()
+                                ->historics()
+                                ->with(['usuarioRemetente'])
+                                ->paginate($this->totalPaginas);//retirado o get pelo paginate para colocar o numero de paginas
         
 
         return view('admin.balance.consulta-historico', compact('historics')); 

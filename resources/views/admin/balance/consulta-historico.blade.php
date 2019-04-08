@@ -47,6 +47,7 @@
                     @endforelse
                 </tbody>
             </table>
+            {!! $historics->links()!!}<!--o link faz com que apasa as paginas com os registros restantes-->
         </div>
     </div>
 @stop

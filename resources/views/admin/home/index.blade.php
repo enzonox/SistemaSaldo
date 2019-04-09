@@ -7,5 +7,5 @@
 @stop
 
 @section('content')<!--Conteudo da pagina-->
-    <p>You are logged in!</p>
+    <p>Voce esta logado!</p>
 @stop

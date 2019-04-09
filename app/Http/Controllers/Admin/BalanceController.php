@@ -7,9 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Balance;
 use App\Http\Requests\MoneyValidationFormRequest;
 use App\User;
+use App\Models\Historic;
 
 class BalanceController extends Controller
-{
+{   
+    private $totalPaginas = 10;//variavel parapaginacao
     public function index(){
         //dd( auth()->user()->balance()->get()); Para jogar no dd os dados que estao vindo da tabela, o get esta retornando o registro
         $balance = auth()->user()->balance;//
@@ -108,5 +110,28 @@ class BalanceController extends Controller
                         ->route('transferencia.confirmada')
                         ->with('error', $response['message']);
         }
+    }
+
+    public function historico(Historic $historico)
+    {
+        $historics = auth()->user()
+                                ->historics()
+                                ->with(['usuarioRemetente'])
+                                ->paginate($this->totalPaginas);//retirado o get pelo paginate para colocar o numero de paginas
+        
+        $types = $historico->type();//Para inserir os tipos na pesquisa
+        return view('admin.balance.consulta-historico', compact('historics', 'types')); 
+    }
+
+    public function pesquisaHistorico(Request $request, Historic $historico)
+    {//metodo para realizar o filtro
+        $dataForm = $request->except('_token');//Aqui estamos pegando todos os campos exceto o token
+
+        $historics = $historico->pesquisa($dataForm, $this->totalPaginas);
+        
+        $types = $historico->type();
+
+        return view('admin.balance.consulta-historico', compact('historics', 'types', 'dataForm'));
+
     }
 }

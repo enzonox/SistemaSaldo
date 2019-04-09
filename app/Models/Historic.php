@@ -28,6 +28,11 @@ class Historic extends Model
         return $tipos[$tipo];
     } 
 
+    public function scopeUserAuth($query)
+    {//Metodo para realizar a query que amarra com o id do usuario logado
+       return $query->where('user_id', auth()->user()->id);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);//Fazendo a referencia d eum para um
@@ -58,6 +63,9 @@ class Historic extends Model
                 $query->where('type', $data['type']);
             
         })//->toSql();dd($historics);
+       // ->where('user_id', auth()->user()->id) Essa e realizando a query para trazer os historicos do usuario logado
+        ->userAuth()//utilizando o scope
+        ->with(['usuarioRemetente'])//tranzendo tambem o id do usuario que transferiu
         ->paginate($totalPagina);//Para retornar o resultado da pesquisa
 
         return $historics;

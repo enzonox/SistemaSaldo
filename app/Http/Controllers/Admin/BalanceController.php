@@ -125,13 +125,13 @@ class BalanceController extends Controller
 
     public function pesquisaHistorico(Request $request, Historic $historico)
     {//metodo para realizar o filtro
-        $dataForm = $request->all();
+        $dataForm = $request->except('_token');//Aqui estamos pegando todos os campos exceto o token
 
         $historics = $historico->pesquisa($dataForm, $this->totalPaginas);
         
         $types = $historico->type();
 
-        return view('admin.balance.consulta-historico', compact('historics', 'types'));
+        return view('admin.balance.consulta-historico', compact('historics', 'types', 'dataForm'));
 
     }
 }

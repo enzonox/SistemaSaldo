@@ -13,7 +13,7 @@
 //Grupo de Administracao
 $this->group(['middleware' => ['auth'], 'namespace' => 'Admin', 'prefix' => 'admin'], function(){// Gurpo de rotas com permissoes de acesso por autenticacao
     
-    $this->post('historico', 'BalanceController@pesquisaHistorico')->name('historico.pesquisa');
+    $this->any('historico-pesquisa', 'BalanceController@pesquisaHistorico')->name('historico.pesquisa');
     $this->get('historico','BalanceController@historico')->name('admin.historico');
     
     $this->get('trasferencia','BalanceController@transferencia')->name('balance.transferencia');

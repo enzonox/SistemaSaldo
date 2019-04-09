@@ -59,7 +59,12 @@
                     @endforelse
                 </tbody>
             </table>
-            {!! $historics->links()!!}<!--o link faz com que apasa as paginas com os registros restantes-->
+
+            @if(isset($dataForm))
+                {!! $historics->appends($dataForm)->links() !!}<!--Assim estamos passando os dados como parametro pela URL-->
+            @else
+                {!! $historics->links()!!}<!--o link faz com que apasa as paginas com os registros restantes-->
+            @endif
         </div>
     </div>
 @stop

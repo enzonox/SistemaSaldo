@@ -12,4 +12,10 @@ class UserController extends Controller
     {
         return view('site.perfil.perfil');
     }
+
+    public function perfilUpdate(Request $request)
+    {
+        
+        dd($request->all());
+    }
 }

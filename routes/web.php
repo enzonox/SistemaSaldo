@@ -31,6 +31,7 @@ $this->group(['middleware' => ['auth'], 'namespace' => 'Admin', 'prefix' => 'adm
     $this->get('/', 'AdminController@index')->name('admin.home');
 });
 
+$this->post('atualizar-perfil', 'Admin\UserController@perfilUpdate')->name('perfil.update')->middleware('auth');
 $this->get('meu-perfil', 'Admin\UserController@perfil')->name('perfil')->middleware('auth');
 
 $this->get('/', 'Site\SiteController@index')->name('home');

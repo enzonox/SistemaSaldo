@@ -33,6 +33,10 @@
         <input type="password" name="password" placeholder="Senha" class="form-control">
     </div>
     <div class="form-group">
+        @if(auth()->user()->image != null)
+    <img src="{{url('storage/usuarios/'.auth()->user()->image)}}" alt="{{auth()->user()->name}}" style="max-width: 50px;">
+        @endif
+
         <label for="image">Imagem</label>
         <input type="file" name="image" placeholder="Imagem" class="form-control">
     </div>

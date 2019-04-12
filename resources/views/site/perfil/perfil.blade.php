@@ -6,8 +6,20 @@
 
 <h1>Meu Perfil<h1>
 
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{session('success')}}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{session('error')}}
+        </div>
+    @endif
+
 <form action="{{route('perfil.update')}}" method="POST">
-    {{!! csrf_field()!!}}
+    {!! csrf_field()!!}
     <div class="form-group">
         <label for="name">Nome</label>
     <input type="text" value="{{auth()->user()->name}}" name="name" placeholder="Nome" class="form-control">

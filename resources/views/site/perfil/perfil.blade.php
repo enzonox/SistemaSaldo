@@ -18,7 +18,7 @@
         </div>
     @endif
 
-<form action="{{route('perfil.update')}}" method="POST">
+<form action="{{route('perfil.update')}}" method="POST" enctype="multipart/form-data">
     {!! csrf_field()!!}
     <div class="form-group">
         <label for="name">Nome</label>

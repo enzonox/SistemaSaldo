@@ -15,6 +15,7 @@ class UserController extends Controller
 
     public function perfilUpdate(Request $request)
     {
+        $usuario = auth()->user();
         $data = $request->all();
 
         if($data['password'] != null){
@@ -23,8 +24,32 @@ class UserController extends Controller
         }else{
             unset($data['password']);
         }
-        //atualizando os campos
-       $update = auth()->user()->update($data);
+    //inserindo a imagem    
+        $data['image'] = $usuario->image;
+        if($request->hasFile('image') && $request->file('image')->isValid()){
+            if($usuario->image){
+                $name = $usuario->image;
+            }else{
+                $name = $usuario->id.kebab_case($usuario->name);//Criando o nome da imagem para assim evitar conflitos de nomenclatura iguais
+            }
+
+            $extensao = $request->image->extension();//extensao da imagem
+            $nomeArquivo ="{$name}.{$extensao}";//Concatenando nome da imagem com a extensao 
+            $data['image'] = $nomeArquivo;//atualizar o nome da imagem
+
+            //Agora sera definido aonde que a imagem vai ficar
+            $upload = $request->image->storeAs('usuarios', $nomeArquivo);
+
+            if(!$upload){
+                return redirect()
+                            ->back()
+                            -with('error','Falha ao fazer o upload da Imagem');
+            }
+        }
+
+
+    //atualizando os campos
+       $update = $usuario->update($data);
 
        if($update){
             return redirect()
